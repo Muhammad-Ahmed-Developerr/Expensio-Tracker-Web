@@ -1,4 +1,4 @@
-# Expense Tracker App 💰
+# Expensio Tracker Web 💰
 
 A modern, full-stack expense tracking application built with cutting-edge web technologies. Manage your personal finances with ease, track expenses in multiple currencies, and generate detailed PDF reports.
 
