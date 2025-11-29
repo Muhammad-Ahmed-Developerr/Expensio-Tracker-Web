@@ -64,5 +64,5 @@ A modern, full-stack expense tracking application built with cutting-edge web te
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/expensio-tracker-web.git
-   cd expense-tracker-app
+   git clone https://https://github.com/Muhammad-Ahmed-Developerr/Expensio-Tracker-Web.git
+   cd Expensio-Tracker-Web
