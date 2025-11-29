@@ -56,7 +56,7 @@ export default function SettingsPage() {
     const id = Date.now().toString()
     const notification: Notification = { type, message, id }
     setNotifications(prev => [...prev, notification])
-    
+
     // Auto remove after 5 seconds
     setTimeout(() => {
       removeNotification(id)
@@ -94,7 +94,8 @@ export default function SettingsPage() {
     }
   }
 
-  const handleSettingChange = (key: keyof AppSettings, value: any) => {
+  // typed to accept AppSettings value variants
+  const handleSettingChange = (key: keyof AppSettings, value: AppSettings[keyof AppSettings]) => {
     const newSettings = { ...settings, [key]: value }
     setSettings(newSettings)
   }
@@ -114,7 +115,7 @@ export default function SettingsPage() {
       const response = await fetch('/api/expenses?limit=1000')
       if (response.ok) {
         const data = await response.json()
-        
+
         if (data.expenses.length === 0) {
           addNotification('error', 'No data available to export')
           return
@@ -134,7 +135,7 @@ export default function SettingsPage() {
 
         const csv = [
           headers.join(","),
-          ...rows.map((row: string[]) => 
+          ...rows.map((row: string[]) =>
             row.map(cell => `"${cell}"`).join(",")
           )
         ].join("\n")
@@ -146,7 +147,7 @@ export default function SettingsPage() {
         link.download = `expense-tracker-backup-${new Date().toISOString().split("T")[0]}.csv`
         link.click()
         window.URL.revokeObjectURL(url)
-        
+
         addNotification('success', 'Data exported successfully!')
       } else {
         throw new Error('Failed to fetch data')
@@ -167,7 +168,7 @@ export default function SettingsPage() {
       const response = await fetch('/api/expenses?limit=1000')
       if (response.ok) {
         const data = await response.json()
-        
+
         if (data.expenses.length === 0) {
           addNotification('error', 'No data to clear')
           setShowClearDataConfirm(false)
@@ -178,7 +179,7 @@ export default function SettingsPage() {
         const deletePromises = data.expenses.map((expense: any) =>
           fetch(`/api/expenses/${expense._id}`, { method: "DELETE" })
         )
-        
+
         await Promise.all(deletePromises)
         addNotification('success', 'All data cleared successfully!')
       }
@@ -247,8 +248,8 @@ export default function SettingsPage() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 100 }}
             className={`flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg backdrop-blur-sm border ${
-              notification.type === 'success' 
-                ? 'bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/30' 
+              notification.type === 'success'
+                ? 'bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/30'
                 : 'bg-red-500/20 text-red-700 dark:text-red-400 border-red-500/30'
             }`}
           >
@@ -295,7 +296,7 @@ export default function SettingsPage() {
               className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 space-y-4 rounded-2xl"
             >
               <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Quick Actions</h3>
-              
+
               <motion.button
                 onClick={handleExportAllData}
                 whileHover={{ scale: 1.02 }}
@@ -358,7 +359,7 @@ export default function SettingsPage() {
                 {currentTheme === 'dark' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
                 Appearance
               </h3>
-              
+
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
@@ -389,7 +390,7 @@ export default function SettingsPage() {
                 <Bell className="w-5 h-5" />
                 Notifications
               </h3>
-              
+
               <div className="space-y-4">
                 {[
                   { key: 'emailNotifications', label: 'Email Notifications', description: 'Receive email updates about your expenses' },
@@ -402,16 +403,19 @@ export default function SettingsPage() {
                       <p className="text-sm text-slate-600 dark:text-slate-400">{item.description}</p>
                     </div>
                     <button
-                      onClick={() => handleSettingChange(item.key as keyof AppSettings, !settings[item.key as keyof AppSettings])}
+                      onClick={() =>
+                        // cast because TS cannot infer this key is boolean here
+                        handleSettingChange(item.key as keyof AppSettings, !(settings[item.key as keyof AppSettings] as boolean))
+                      }
                       className={`relative inline-flex h-6 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 ${
-                        settings[item.key as keyof AppSettings] 
-                          ? 'bg-cyan-500' 
+                        Boolean(settings[item.key as keyof AppSettings])
+                          ? 'bg-cyan-500'
                           : 'bg-slate-300 dark:bg-slate-600'
                       }`}
                     >
                       <span
                         className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                          settings[item.key as keyof AppSettings] ? 'translate-x-7' : 'translate-x-1'
+                          Boolean(settings[item.key as keyof AppSettings]) ? 'translate-x-7' : 'translate-x-1'
                         }`}
                       />
                     </button>
@@ -431,7 +435,7 @@ export default function SettingsPage() {
                 <Globe className="w-5 h-5" />
                 Preferences
               </h3>
-              
+
               <div className="space-y-4">
                 {[
                   { key: 'currency', label: 'Default Currency', options: ['PKR', 'USD', 'EUR', 'GBP'] },
@@ -444,7 +448,8 @@ export default function SettingsPage() {
                       <p className="font-medium text-slate-900 dark:text-white">{item.label}</p>
                     </div>
                     <select
-                      value={settings[item.key as keyof AppSettings]}
+                      // cast here: we know these specific keys are strings
+                      value={settings[item.key as keyof AppSettings] as string}
                       onChange={(e) => handleSettingChange(item.key as keyof AppSettings, e.target.value)}
                       className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                     >
