@@ -12,27 +12,28 @@ A modern, full-stack expense tracking application built with cutting-edge web te
 ## 📸 Project Screenshots
 
 <p align="center">
-  <img src="/Screenshot1.png" alt="Screenshot1" width="300" /> &nbsp;
-  <img src="/Screenshot2.png" alt="Screenshot2" width="300" /> &nbsp;
-  <img src="/Screenshot3.png" alt="Screenshot3" width="300" />
+  <img src="./assets/Screenshot1.png" alt="Screenshot1" width="300" /> &nbsp;
+  <img src="./assets/Screenshot2.png" alt="Screenshot2" width="300" /> &nbsp;
+  <img src="./assets/Screenshot3.png" alt="Screenshot3" width="300" />
 </p>
 
 <p align="center">
-  <img src="/Screenshot4.png" alt="Screenshot4" width="300" /> &nbsp;
-  <img src="/Screenshot5.png" alt="Screenshot5" width="300" /> &nbsp;
-  <img src="/Screenshot6.png" alt="Screenshot6" width="300" />
+  <img src="./assets/Screenshot4.png" alt="Screenshot4" width="300" /> &nbsp;
+  <img src="./assets/Screenshot5.png" alt="Screenshot5" width="300" /> &nbsp;
+  <img src="./assets/Screenshot6.png" alt="Screenshot6" width="300" />
 </p>
 
 <p align="center">
-  <img src="/Screenshot7.png" alt="Screenshot7" width="300" /> &nbsp;
-  <img src="/Screenshot8.png" alt="Screenshot8" width="300" /> &nbsp;
-  <img src="/Screenshot9.png" alt="Screenshot9" width="300" />
+  <img src="./assets/Screenshot7.png" alt="Screenshot7" width="300" /> &nbsp;
+  <img src="./assets/Screenshot8.png" alt="Screenshot8" width="300" /> &nbsp;
+  <img src="./assets/Screenshot9.png" alt="Screenshot9" width="300" />
 </p>
 
 <p align="center">
-  <img src="/Screenshot10.png" alt="Screenshot10" width="300" /> &nbsp;
-  <img src="/Screenshot11.png" alt="Screenshot11" width="300" />
+  <img src="./assets/Screenshot10.png" alt="Screenshot10" width="300" /> &nbsp;
+  <img src="./assets/Screenshot11.png" alt="Screenshot11" width="300" />
 </p>
+
 
 ## 🚀 Features
 
