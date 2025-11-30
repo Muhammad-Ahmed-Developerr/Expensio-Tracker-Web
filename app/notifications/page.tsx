@@ -51,7 +51,6 @@ export default function NotificationsPage() {
 
   const loadNotifications = async () => {
     try {
-
       const saved = JSON.parse(localStorage.getItem("expenseNotifications") || "[]")
       const readStatus = JSON.parse(localStorage.getItem("notificationReadStatus") || "{}")
 
@@ -134,13 +133,13 @@ export default function NotificationsPage() {
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case "expense_created":
-        return <DollarSign className="w-5 h-5 text-cyan-500" />
+        return <DollarSign className="w-5 h-5 text-cyan-500 dark:text-cyan-400" />
       case "expense_updated":
-        return <Edit className="w-5 h-5 text-yellow-500" />
+        return <Edit className="w-5 h-5 text-yellow-500 dark:text-yellow-400" />
       case "expense_deleted":
-        return <Trash2 className="w-5 h-5 text-red-500" />
+        return <Trash2 className="w-5 h-5 text-red-500 dark:text-red-400" />
       default:
-        return <Info className="w-5 h-5 text-blue-500" />
+        return <Info className="w-5 h-5 text-blue-500 dark:text-blue-400" />
     }
   }
 
@@ -162,11 +161,11 @@ export default function NotificationsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-slate-900">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full"
+          className="w-12 h-12 border-4 border-cyan-500 dark:border-cyan-400 border-t-transparent rounded-full"
         />
       </div>
     )
@@ -175,7 +174,7 @@ export default function NotificationsPage() {
   const unreadCount = notifications.filter((n) => !n.read).length
 
   return (
-    <main className="min-h-screen py-8 px-4">
+    <main className="min-h-screen py-8 px-4 bg-white dark:bg-slate-900 transition-colors duration-200">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* HEADER */}
         <motion.div
@@ -188,14 +187,14 @@ export default function NotificationsPage() {
               onClick={() => router.back()}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="p-2 rounded-lg"
+              className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             >
-              <ArrowLeft className="w-6 h-6 text-cyan-600" />
+              <ArrowLeft className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
             </motion.button>
 
             <div>
-              <h1 className="text-3xl font-bold">Notifications</h1>
-              <p>{unreadCount} unread</p>
+              <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Notifications</h1>
+              <p className="text-slate-600 dark:text-slate-400">{unreadCount} unread</p>
             </div>
           </div>
 
@@ -204,20 +203,20 @@ export default function NotificationsPage() {
               onClick={markAllAsRead}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-4 py-2 bg-cyan-600 text-white rounded-lg"
+              className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors"
             >
               Mark all as read
             </motion.button>
           )}
         </motion.div>
 
-        {/* LIST */}
+        {/* NOTIFICATIONS LIST */}
         <motion.div className="space-y-4">
           {notifications.length === 0 ? (
-            <div className="p-12 text-center rounded-2xl">
-              <Bell className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold">No notifications</h3>
-              <p>You're all caught up!</p>
+            <div className="p-12 text-center rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
+              <Bell className="w-16 h-16 text-slate-400 dark:text-slate-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">No notifications</h3>
+              <p className="text-slate-600 dark:text-slate-400">You're all caught up!</p>
             </div>
           ) : (
             notifications.map((notification, index) => (
@@ -226,14 +225,14 @@ export default function NotificationsPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className={`p-6 rounded-2xl border-l-4 ${
+                className={`p-6 rounded-2xl border-l-4 transition-all duration-200 ${
                   notification.read
-                    ? "border-l-slate-300"
+                    ? "border-l-slate-300 dark:border-l-slate-600 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
                     : notification.type === 'expense_created' 
-                      ? "border-l-cyan-500 bg-cyan-50/50"
+                      ? "border-l-cyan-500 dark:border-l-cyan-400 bg-cyan-50/80 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800/50"
                       : notification.type === 'expense_updated'
-                        ? "border-l-yellow-500 bg-yellow-50/50"
-                        : "border-l-red-500 bg-red-50/50"
+                        ? "border-l-yellow-500 dark:border-l-yellow-400 bg-yellow-50/80 dark:bg-yellow-900/20 border border-yellow-100 dark:border-yellow-800/50"
+                        : "border-l-red-500 dark:border-l-red-400 bg-red-50/80 dark:bg-red-900/20 border border-red-100 dark:border-red-800/50"
                 }`}
               >
                 <div className="flex items-start justify-between">
@@ -241,10 +240,10 @@ export default function NotificationsPage() {
                     <div className="mt-1">{getNotificationIcon(notification.type)}</div>
 
                     <div className="flex-1">
-                      <h3 className="font-semibold">{notification.title}</h3>
-                      <p className="mb-2">{notification.message}</p>
+                      <h3 className="font-semibold text-slate-900 dark:text-white">{notification.title}</h3>
+                      <p className="mb-2 text-slate-700 dark:text-slate-300">{notification.message}</p>
 
-                      <div className="flex items-center gap-4 text-sm text-slate-500">
+                      <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
                         <span className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
                           {getTimeAgo(notification.timestamp)}
@@ -253,7 +252,7 @@ export default function NotificationsPage() {
                         {notification.expenseId && (
                           <button
                             onClick={() => router.push(`/receipt/${notification.expenseId}`)}
-                            className="text-cyan-600 hover:underline"
+                            className="text-cyan-600 dark:text-cyan-400 hover:underline font-medium"
                           >
                             View Expense
                           </button>
@@ -266,17 +265,23 @@ export default function NotificationsPage() {
                     {!notification.read && (
                       <motion.button
                         onClick={() => markAsRead(notification.id)}
-                        className="p-1 rounded-lg"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                        title="Mark as read"
                       >
-                        <CheckCircle className="w-4 h-4 text-slate-500" />
+                        <CheckCircle className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                       </motion.button>
                     )}
 
                     <motion.button
                       onClick={() => deleteNotification(notification.id)}
-                      className="p-1 rounded-lg"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="p-1 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
+                      title="Delete notification"
                     >
-                      <X className="w-4 h-4 text-red-500" />
+                      <X className="w-4 h-4 text-red-500 dark:text-red-400" />
                     </motion.button>
                   </div>
                 </div>
@@ -285,32 +290,32 @@ export default function NotificationsPage() {
           )}
         </motion.div>
 
-        {/* Stats */}
+        {/* STATS CARDS */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
-          <div className="glass p-6 text-center rounded-2xl">
+          <div className="p-6 text-center rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
             <div className="text-2xl font-bold text-cyan-600 dark:text-cyan-400 mb-2">
               {notifications.length}
             </div>
-            <div className="text-slate-600 dark:text-slate-400">Total</div>
+            <div className="text-slate-600 dark:text-slate-400 font-medium">Total</div>
           </div>
           
-          <div className="glass p-6 text-center rounded-2xl">
+          <div className="p-6 text-center rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
             <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400 mb-2">
               {unreadCount}
             </div>
-            <div className="text-slate-600 dark:text-slate-400">Unread</div>
+            <div className="text-slate-600 dark:text-slate-400 font-medium">Unread</div>
           </div>
           
-          <div className="glass p-6 text-center rounded-2xl">
+          <div className="p-6 text-center rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
             <div className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">
               {notifications.filter(n => n.type === 'expense_created').length}
             </div>
-            <div className="text-slate-600 dark:text-slate-400">Expense Alerts</div>
+            <div className="text-slate-600 dark:text-slate-400 font-medium">Expense Alerts</div>
           </div>
         </motion.div>
       </div>
