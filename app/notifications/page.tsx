@@ -1,4 +1,3 @@
-// page.tsx (Notifications)
 "use client"
 
 import { useState, useEffect } from "react"
@@ -52,17 +51,15 @@ export default function NotificationsPage() {
 
   const loadNotifications = async () => {
     try {
-      // Load saved notifications
+
       const saved = JSON.parse(localStorage.getItem("expenseNotifications") || "[]")
       const readStatus = JSON.parse(localStorage.getItem("notificationReadStatus") || "{}")
 
-      // FIXED: Convert timestamps from strings to Date objects
       const savedNotifications: Notification[] = saved.map((n: Notification) => ({
         ...n,
         timestamp: new Date(n.timestamp)
       }))
 
-      // Sort newest first and remove duplicates based on expenseId and type
       const uniqueNotifications = savedNotifications.reduce((acc: Notification[], current) => {
         const isDuplicate = acc.find(item => 
           item.expenseId === current.expenseId && 
@@ -75,7 +72,6 @@ export default function NotificationsPage() {
         return acc
       }, []).sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
 
-      // Apply read status
       const withRead: Notification[] = uniqueNotifications.map((n) => ({
         ...n,
         read: readStatus[n.id] || false
@@ -148,7 +144,6 @@ export default function NotificationsPage() {
     }
   }
 
-  // FIXED: Always convert timestamp to Date before using getTime()
   const getTimeAgo = (timestamp: Date | string) => {
     const ts = new Date(timestamp)
     const now = new Date()

@@ -7,6 +7,8 @@ A modern, full-stack expense tracking application built with cutting-edge web te
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![MongoDB](https://img.shields.io/badge/MongoDB-7-green)
 
+🌐 **Website:** [https://expensio-tracker-web.netlify.app](https://expensio-tracker-web.netlify.app)
+
 ## 🚀 Features
 
 ### ✨ Core Functionality
@@ -64,5 +66,5 @@ A modern, full-stack expense tracking application built with cutting-edge web te
 
 1. **Clone the repository**
    ```bash
-   git clone https://https://github.com/Muhammad-Ahmed-Developerr/Expensio-Tracker-Web.git
+   git clone https://github.com/Muhammad-Ahmed-Developerr/Expensio-Tracker-Web.git
    cd Expensio-Tracker-Web

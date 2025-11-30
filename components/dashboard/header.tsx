@@ -43,7 +43,6 @@ export default function DashboardHeader() {
 
     const fetchNotificationCount = async () => {
       try {
-        // Load notification count from localStorage
         const savedNotifications = JSON.parse(localStorage.getItem('expenseNotifications') || '[]')
         const readStatus = JSON.parse(localStorage.getItem('notificationReadStatus') || '{}')
         
@@ -57,12 +56,10 @@ export default function DashboardHeader() {
     fetchProfile()
     fetchNotificationCount()
     
-    // Update notification count every 30 seconds
     const interval = setInterval(fetchNotificationCount, 30000)
     return () => clearInterval(interval)
   }, [])
 
-  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

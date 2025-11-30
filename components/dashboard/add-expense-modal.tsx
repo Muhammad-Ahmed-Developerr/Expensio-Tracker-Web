@@ -1,4 +1,3 @@
-// add-expense-modal.tsx
 "use client"
 
 import type React from "react"
@@ -161,7 +160,6 @@ export default function AddExpenseModal({ onClose, onSuccess }: AddExpenseModalP
 
       if (response.ok) {
         const createdExpense = await response.json()
-        // Add notification for expense creation
         addNotification('expense_created', createdExpense)
         onSuccess()
       } else {

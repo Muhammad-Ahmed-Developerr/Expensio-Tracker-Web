@@ -19,7 +19,6 @@ export async function GET(request: NextRequest) {
     const page = Number.parseInt(searchParams.get("page") || "1")
     const limit = Number.parseInt(searchParams.get("limit") || "20")
 
-    // Build query
     const query: any = {
       userId: new ObjectId(payload.userId as string),
     }
@@ -82,7 +81,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { expenseNumber, userName, title, amount, date, notes, currency } = body
 
-    // Validation
     if (!expenseNumber || typeof expenseNumber !== "number" || expenseNumber <= 0) {
       return NextResponse.json({ message: "Valid expense number is required" }, { status: 400 })
     }
@@ -105,7 +103,6 @@ export async function POST(request: NextRequest) {
 
     const { db } = await connectToDatabase()
 
-    // Check if expense number already exists for this user
     const existingExpense = await db.collection("expenses").findOne({
       userId: new ObjectId(payload.userId as string),
       expenseNumber: expenseNumber
@@ -115,7 +112,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Expense number already exists" }, { status: 400 })
     }
 
-    // Get user to include sequential ID
     const user = await db.collection("users").findOne({ 
       _id: new ObjectId(payload.userId as string) 
     })
@@ -126,7 +122,7 @@ export async function POST(request: NextRequest) {
 
     const result = await db.collection("expenses").insertOne({
       userId: new ObjectId(payload.userId as string),
-      userSequentialId: user.userId, // user001, user002, etc.
+      userSequentialId: user.userId, 
       userName: userName.trim(),
       title: title.trim(),
       amount: Math.round(amount),

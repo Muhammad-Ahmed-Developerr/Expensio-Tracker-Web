@@ -57,7 +57,6 @@ export default function SettingsPage() {
     const notification: Notification = { type, message, id }
     setNotifications(prev => [...prev, notification])
 
-    // Auto remove after 5 seconds
     setTimeout(() => {
       removeNotification(id)
     }, 5000)
@@ -94,7 +93,6 @@ export default function SettingsPage() {
     }
   }
 
-  // typed to accept AppSettings value variants
   const handleSettingChange = (key: keyof AppSettings, value: AppSettings[keyof AppSettings]) => {
     const newSettings = { ...settings, [key]: value }
     setSettings(newSettings)
@@ -121,7 +119,6 @@ export default function SettingsPage() {
           return
         }
 
-        // Export as CSV
         const headers = ["Expense #", "Date", "Title", "Amount", "Currency", "User", "Notes"]
         const rows = data.expenses.map((exp: any) => [
           exp.expenseNumber.toString(),
@@ -164,7 +161,7 @@ export default function SettingsPage() {
 
   const confirmClearAllData = async () => {
     try {
-      // Get all expenses first
+
       const response = await fetch('/api/expenses?limit=1000')
       if (response.ok) {
         const data = await response.json()
@@ -175,7 +172,6 @@ export default function SettingsPage() {
           return
         }
 
-        // Delete each expense
         const deletePromises = data.expenses.map((expense: any) =>
           fetch(`/api/expenses/${expense._id}`, { method: "DELETE" })
         )
@@ -404,7 +400,6 @@ export default function SettingsPage() {
                     </div>
                     <button
                       onClick={() =>
-                        // cast because TS cannot infer this key is boolean here
                         handleSettingChange(item.key as keyof AppSettings, !(settings[item.key as keyof AppSettings] as boolean))
                       }
                       className={`relative inline-flex h-6 w-12 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 ${
@@ -448,7 +443,6 @@ export default function SettingsPage() {
                       <p className="font-medium text-slate-900 dark:text-white">{item.label}</p>
                     </div>
                     <select
-                      // cast here: we know these specific keys are strings
                       value={settings[item.key as keyof AppSettings] as string}
                       onChange={(e) => handleSettingChange(item.key as keyof AppSettings, e.target.value)}
                       className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"

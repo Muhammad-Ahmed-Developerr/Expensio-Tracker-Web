@@ -46,7 +46,6 @@ export async function PUT(request: NextRequest, props: { params: Promise<{ id: s
     const body = await request.json()
     const { expenseNumber, userName, title, amount, date, notes, currency } = body
 
-    // Validation
     if (!expenseNumber || typeof expenseNumber !== "number" || expenseNumber <= 0) {
       return NextResponse.json({ message: "Valid expense number is required" }, { status: 400 })
     }
@@ -69,7 +68,6 @@ export async function PUT(request: NextRequest, props: { params: Promise<{ id: s
 
     const { db } = await connectToDatabase()
 
-    // Check if expense number already exists for this user (excluding current expense)
     const existingExpense = await db.collection("expenses").findOne({
       userId: new ObjectId(payload.userId as string),
       expenseNumber: expenseNumber,

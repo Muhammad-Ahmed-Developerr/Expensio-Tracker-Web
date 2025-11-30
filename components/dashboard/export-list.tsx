@@ -1,4 +1,3 @@
-// export-list.tsx
 "use client"
 
 import { useCallback, useState } from "react"
@@ -22,7 +21,6 @@ interface CurrencySummary {
 export default function ExportList({ expenses, userName }: ExportListProps) {
   const [isExporting, setIsExporting] = useState(false)
 
-  // Helper function to format amount correctly (divide by 100 and format without commas/dots)
   const formatAmountForExport = (amount: number): string => {
     const actualAmount = amount / 100
     const isWhole = actualAmount % 1 === 0
@@ -30,11 +28,10 @@ export default function ExportList({ expenses, userName }: ExportListProps) {
     return actualAmount.toLocaleString('en-US', {
       minimumFractionDigits: isWhole ? 0 : 2,
       maximumFractionDigits: isWhole ? 0 : 2,
-      useGrouping: false // This removes commas/dots in thousands
+      useGrouping: false 
     })
   }
 
-  // Helper function to format amount with currency symbol
   const formatAmountWithSymbol = (amount: number, currency: string): string => {
     const actualAmount = amount / 100
     const isWhole = actualAmount % 1 === 0
@@ -42,11 +39,11 @@ export default function ExportList({ expenses, userName }: ExportListProps) {
     const formattedAmount = actualAmount.toLocaleString('en-US', {
       minimumFractionDigits: isWhole ? 0 : 2,
       maximumFractionDigits: isWhole ? 0 : 2,
-      useGrouping: false // This removes commas/dots in thousands
+      useGrouping: false
     })
 
     const currencySymbols: { [key: string]: string } = {
-      'PKR': 'Rs', // Using 'Rs' instead of '₨' for better PDF compatibility
+      'PKR': 'Rs', 
       'USD': '$',
       'EUR': '€',
       'GBP': '£'
@@ -65,8 +62,7 @@ export default function ExportList({ expenses, userName }: ExportListProps) {
       const pageWidth = doc.internal.pageSize.getWidth()
       let yPos = 20
 
-      // Header with gradient effect simulation
-      doc.setFillColor(6, 182, 212) // Cyan-500
+      doc.setFillColor(6, 182, 212) 
       doc.rect(0, 0, pageWidth, 80, 'F')
       
       doc.setTextColor(255, 255, 255)
@@ -82,7 +78,6 @@ export default function ExportList({ expenses, userName }: ExportListProps) {
 
       yPos = 90
 
-      // Group expenses by currency and calculate totals
       const expensesByCurrency: { [key: string]: Expense[] } = {}
       const currencySummaries: { [key: string]: CurrencySummary } = {}
 
@@ -101,39 +96,35 @@ export default function ExportList({ expenses, userName }: ExportListProps) {
         currencySummaries[currency].count += 1
       })
 
-      // Table for each currency
       Object.entries(expensesByCurrency).forEach(([currency, currencyExpenses], currencyIndex) => {
         if (currencyIndex > 0) {
           doc.addPage()
           yPos = 20
         }
 
-        // Currency header
-        doc.setTextColor(6, 182, 212) // Cyan-500
+        doc.setTextColor(6, 182, 212)
         doc.setFontSize(16)
         doc.setFont("helvetica", "bold")
         doc.text(`Currency: ${currency}`, 14, yPos)
         yPos += 15
 
-        // Prepare table data - FIXED: Divide by 100 and remove dots/commas
         const tableData = currencyExpenses.map(expense => [
           `#${expense.expenseNumber}`,
           new Date(expense.date).toLocaleDateString(),
           expense.title.length > 30 ? expense.title.substring(0, 30) + '...' : expense.title,
           expense.userName,
-          // FIXED: Divide by 100 and format without dots/commas
+
           formatAmountWithSymbol(expense.amount, expense.currency),
           expense.notes && expense.notes.length > 20 ? expense.notes.substring(0, 20) + '...' : (expense.notes || 'N/A')
         ])
 
-        // Create table
         autoTable(doc, {
           startY: yPos,
           head: [['#', 'Date', 'Title', 'User', 'Amount', 'Notes']],
           body: tableData,
           theme: 'grid',
           headStyles: {
-            fillColor: [6, 182, 212], // Cyan-500
+            fillColor: [6, 182, 212], 
             textColor: 255,
             fontStyle: 'bold'
           },
@@ -147,16 +138,14 @@ export default function ExportList({ expenses, userName }: ExportListProps) {
           margin: { left: 14, right: 14 }
         })
 
-        // Add summary for this currency - CENTERED
         const finalY = (doc as any).lastAutoTable.finalY + 15
         doc.setTextColor(0, 0, 0)
         doc.setFontSize(12)
         doc.setFont("helvetica", "bold")
         const summary = currencySummaries[currency]
-        // FIXED: Divide by 100 and format without dots/commas
+
         const totalFormatted = formatAmountWithSymbol(summary.total, currency)
         
-        // Center the total text
         const totalText = `Total ${currency}: ${totalFormatted} (${summary.count} expenses)`
         const textWidth = doc.getTextWidth(totalText)
         const xPosition = (pageWidth - textWidth) / 2
@@ -164,7 +153,6 @@ export default function ExportList({ expenses, userName }: ExportListProps) {
         doc.text(totalText, xPosition, finalY)
       })
 
-      // Add overall summary page if multiple currencies
       if (Object.keys(expensesByCurrency).length > 1) {
         doc.addPage()
         yPos = 20
@@ -178,7 +166,7 @@ export default function ExportList({ expenses, userName }: ExportListProps) {
         const summaryData = Object.values(currencySummaries).map(summary => [
           summary.currency,
           summary.count.toString(),
-          // FIXED: Divide by 100 and format without dots/commas
+
           formatAmountWithSymbol(summary.total, summary.currency)
         ])
 
@@ -198,12 +186,9 @@ export default function ExportList({ expenses, userName }: ExportListProps) {
           },
           margin: { left: 14, right: 14 }
         })
-
-        // Don't show grand total for multiple currencies as it doesn't make sense
-        // with different currencies
       }
 
-      // Add footer to each page
+
       const pageCount = doc.getNumberOfPages()
       for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i)
@@ -229,7 +214,6 @@ export default function ExportList({ expenses, userName }: ExportListProps) {
       exp.expenseNumber.toString(),
       new Date(exp.date).toLocaleDateString(),
       exp.title,
-      // FIXED: Divide by 100 and format without dots/commas
       formatAmountForExport(exp.amount),
       exp.currency,
       exp.userName,

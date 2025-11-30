@@ -17,7 +17,6 @@ interface UserProfile {
   userId: string
 }
 
-// Animated Number Component
 function AnimatedNumber({ value, duration = 2 }: { value: number; duration?: number }) {
   const [displayValue, setDisplayValue] = useState(0)
 
@@ -42,7 +41,6 @@ function AnimatedNumber({ value, duration = 2 }: { value: number; duration?: num
   return <span>{displayValue.toLocaleString()}</span>
 }
 
-// Animated Currency Component
 function AnimatedCurrency({ value, currency = "PKR", duration = 2 }: { value: number; currency?: string; duration?: number }) {
   const [displayValue, setDisplayValue] = useState(0)
 

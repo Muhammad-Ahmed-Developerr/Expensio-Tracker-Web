@@ -66,7 +66,7 @@ export default function ExpenseCard({ expense, onRefresh }: ExpenseCardProps) {
       })
 
       if (response.ok) {
-        // Add notification for expense deletion
+
         addNotification('expense_deleted', expense)
         onRefresh()
       } else {

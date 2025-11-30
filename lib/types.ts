@@ -1,6 +1,6 @@
 export interface User {
   _id?: string
-  userId: string // Sequential ID: user001, user002, etc.
+  userId: string 
   googleId: string
   email: string
   name: string
@@ -11,8 +11,8 @@ export interface User {
 
 export interface Expense {
   _id?: string
-  userId: string // MongoDB ObjectId
-  userSequentialId: string // user001, user002, etc.
+  userId: string 
+  userSequentialId: string 
   userName: string
   title: string
   amount: number
@@ -20,7 +20,7 @@ export interface Expense {
   notes?: string
   receiptImage?: string
   currency: string
-  expenseNumber: number // New field for manual expense numbering
+  expenseNumber: number 
   createdAt: Date
 }
 

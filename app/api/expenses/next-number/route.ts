@@ -11,8 +11,7 @@ export async function GET(request: NextRequest) {
     }
 
     const { db } = await connectToDatabase()
-
-    // Find the highest expense number for this user
+    
     const lastExpense = await db.collection("expenses")
       .find({ userId: new ObjectId(payload.userId as string) })
       .sort({ expenseNumber: -1 })

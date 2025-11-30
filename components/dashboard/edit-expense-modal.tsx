@@ -1,4 +1,3 @@
-// edit-expense-modal.tsx (add notification functionality)
 "use client"
 
 import type React from "react"
@@ -100,7 +99,6 @@ export default function EditExpenseModal({ expense, onClose, onSuccess }: EditEx
     setError("")
     setIsLoading(true)
 
-    // Validation
     if (!formData.title.trim()) {
       setError("Title is required")
       setIsLoading(false)
@@ -137,7 +135,7 @@ export default function EditExpenseModal({ expense, onClose, onSuccess }: EditEx
           expenseNumber,
           userName: formData.userName.trim(),
           title: formData.title.trim(),
-          amount: Math.round(amount * 100), // Convert to cents
+          amount: Math.round(amount * 100),
           date: new Date(formData.date),
           notes: formData.notes.trim() || undefined,
           currency: formData.currency,
@@ -146,7 +144,6 @@ export default function EditExpenseModal({ expense, onClose, onSuccess }: EditEx
 
       if (response.ok) {
         const updatedExpense = await response.json()
-        // Add notification for expense update
         addNotification('expense_updated', updatedExpense)
         onSuccess()
       } else {

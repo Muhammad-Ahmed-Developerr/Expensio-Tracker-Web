@@ -50,7 +50,6 @@ export default function ReceiptPage(props: { params: Promise<{ id: string }> }) 
     fetchData()
   }, [params.id, router])
 
-  // Custom format function for PDF to ensure Rs symbol shows correctly
   const formatCurrencyForPDF = (amount: number, currency: string = "PKR"): string => {
     const actualAmount = amount / 100
     const isWholeNumber = actualAmount % 1 === 0
@@ -61,7 +60,6 @@ export default function ReceiptPage(props: { params: Promise<{ id: string }> }) 
       useGrouping: false
     })
 
-    // Use 'Rs' instead of '₨' for better PDF compatibility
     const currencySymbols: { [key: string]: string } = {
       'PKR': 'Rs',
       'USD': '$',
@@ -85,7 +83,6 @@ export default function ReceiptPage(props: { params: Promise<{ id: string }> }) 
       const doc = new jsPDF()
       const pageWidth = doc.internal.pageSize.getWidth()
 
-      // Header with gradient
       doc.setFillColor(6, 182, 212)
       doc.rect(0, 0, pageWidth, 60, 'F')
       
@@ -98,11 +95,9 @@ export default function ReceiptPage(props: { params: Promise<{ id: string }> }) 
       doc.text(`Receipt #${expense.expenseNumber}`, pageWidth / 2, 40, { align: "center" })
       doc.text(`Generated on ${new Date().toLocaleDateString()}`, pageWidth / 2, 50, { align: "center" })
 
-      // Expense Details
       let yPos = 80
       doc.setTextColor(0, 0, 0)
       
-      // Main details table
       autoTable(doc, {
         startY: yPos,
         head: [['Field', 'Details']],
@@ -137,7 +132,6 @@ export default function ReceiptPage(props: { params: Promise<{ id: string }> }) 
         }
       })
 
-      // Add footer
       const finalY = (doc as any).lastAutoTable.finalY + 20
       doc.setFontSize(8)
       doc.setTextColor(150, 150, 150)

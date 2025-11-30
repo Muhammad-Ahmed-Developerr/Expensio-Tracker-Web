@@ -6,30 +6,25 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatCurrency(amount: number, currency: string = 'PKR'): string {
-  // Convert cents to actual amount
   const actualAmount = amount / 100
-  
-  // Check if amount is whole number (no decimal places)
+
   const isWholeNumber = actualAmount % 1 === 0
   
-  // Format based on currency
   let formattedAmount: string
   
   if (isWholeNumber) {
-    // No decimal places for whole numbers
     formattedAmount = actualAmount.toLocaleString('en-US', {
       maximumFractionDigits: 0,
       minimumFractionDigits: 0
     })
   } else {
-    // Show 2 decimal places for non-whole numbers
+
     formattedAmount = actualAmount.toLocaleString('en-US', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     })
   }
-  
-  // Currency symbols mapping
+
   const currencySymbols: { [key: string]: string } = {
     'PKR': '₨',
     'USD': '$',

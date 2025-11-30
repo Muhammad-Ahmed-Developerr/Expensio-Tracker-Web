@@ -5,6 +5,7 @@ import { ObjectId } from "mongodb"
 
 export async function POST(request: NextRequest) {
   try {
+
     const payload = await verifyAuth()
     if (!payload) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
@@ -30,7 +31,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "User not found" }, { status: 404 })
     }
 
-    const user = await db.collection("users").findOne({ _id: new ObjectId(payload.userId as string) })
+    const user = await db
+      .collection("users")
+      .findOne({ _id: new ObjectId(payload.userId as string) })
 
     if (!user) {
       return NextResponse.json({ message: "User not found after update" }, { status: 404 })

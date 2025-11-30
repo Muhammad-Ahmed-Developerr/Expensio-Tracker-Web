@@ -140,7 +140,6 @@
   }
 }
 
-/* Enhanced responsive design */
 @layer utilities {
   @keyframes fadeIn {
     from {
@@ -199,7 +198,6 @@
     animation: float 3s ease-in-out infinite;
   }
 
-  /* Mobile-first responsive utilities */
   .container-responsive {
     @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
@@ -212,13 +210,11 @@
     @apply text-2xl sm:text-3xl lg:text-4xl;
   }
 
-  /* Enhanced glass effect for better theme support */
   .glass-enhanced {
     @apply backdrop-blur-xl bg-white/70 dark:bg-slate-900/70 border border-white/30 dark:border-slate-700/30 shadow-xl;
   }
 }
 
-/* Print styles for receipts */
 @media print {
   .no-print {
     display: none !important;
@@ -236,7 +232,6 @@
   }
 }
 
-/* Google Sign In button customization */
 .gsi-material-button {
   height: 48px !important;
   border-radius: 12px !important;

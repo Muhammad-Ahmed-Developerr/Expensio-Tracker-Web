@@ -15,7 +15,6 @@ interface CurrencySummary {
   average: number
 }
 
-// Animated Number Component for Summary
 function AnimatedNumber({ value, duration = 2 }: { value: number; duration?: number }) {
   const [displayValue, setDisplayValue] = useState(0)
 
@@ -40,7 +39,6 @@ function AnimatedNumber({ value, duration = 2 }: { value: number; duration?: num
   return <span>{displayValue.toLocaleString()}</span>
 }
 
-// Animated Currency Component for Summary
 function AnimatedCurrency({ value, currency = "PKR", duration = 2 }: { value: number; currency?: string; duration?: number }) {
   const [displayValue, setDisplayValue] = useState(0)
 
@@ -82,7 +80,7 @@ function AnimatedCurrency({ value, currency = "PKR", duration = 2 }: { value: nu
 }
 
 export default function ExpenseSummary({ expenses }: ExpenseSummaryProps) {
-  // Calculate totals by currency
+
   const currencySummaries: { [key: string]: CurrencySummary } = {}
 
   expenses.forEach(expense => {
@@ -101,7 +99,6 @@ export default function ExpenseSummary({ expenses }: ExpenseSummaryProps) {
     currencySummaries[currency].count += 1
   })
 
-  // Calculate averages
   Object.keys(currencySummaries).forEach(currency => {
     const summary = currencySummaries[currency]
     summary.average = summary.count > 0 ? summary.total / summary.count : 0

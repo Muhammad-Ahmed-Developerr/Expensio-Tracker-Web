@@ -23,7 +23,6 @@ export async function connectToDatabase() {
 
   const db = client.db("expense_tracker")
 
-  // Initialize counter collection if it doesn't exist
   const counter = await db.collection<Counter>("counters").findOne({ _id: "userId" } as any)
   if (!counter) {
     await db.collection<Counter>("counters").insertOne({
@@ -32,7 +31,6 @@ export async function connectToDatabase() {
     })
   }
 
-  // Initialize expense number counter if it doesn't exist
   const expenseCounter = await db.collection<Counter>("counters").findOne({ _id: "expenseNumber" } as any)
   if (!expenseCounter) {
     await db.collection<Counter>("counters").insertOne({

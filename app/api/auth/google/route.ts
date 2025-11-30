@@ -18,7 +18,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Token is required" }, { status: 400 })
     }
 
-    // Decode Google token
     let decoded: GoogleToken
     try {
       decoded = jwtDecode<GoogleToken>(token)
@@ -28,11 +27,9 @@ export async function POST(request: NextRequest) {
 
     const { db } = await connectToDatabase()
 
-    // Find or create user
     let user = await db.collection("users").findOne({ googleId: decoded.sub })
 
     if (!user) {
-      // Get next sequential user ID
       const userId = await getNextUserId()
       
       const result = await db.collection("users").insertOne({
@@ -47,7 +44,6 @@ export async function POST(request: NextRequest) {
 
       user = await db.collection("users").findOne({ _id: result.insertedId })
     } else {
-      // Update user info if already exists
       await db.collection("users").updateOne(
         { _id: user._id },
         { 
@@ -65,10 +61,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "User creation failed" }, { status: 500 })
     }
 
-    // Create JWT token with userId
     const jwtToken = await createToken(user._id.toString(), user.email)
     
-    // Set HTTP-only cookie
     const response = NextResponse.json({
       user: {
         id: user._id.toString(),
@@ -79,12 +73,11 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    // Set the cookie
     response.cookies.set('token', jwtToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 30 * 24 * 60 * 60, // 30 days
+      maxAge: 30 * 24 * 60 * 60,
       path: '/',
     })
 

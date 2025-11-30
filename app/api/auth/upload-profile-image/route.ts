@@ -4,7 +4,6 @@ import { type NextRequest, NextResponse } from "next/server"
 import { ObjectId } from "mongodb"
 import { v2 as cloudinary } from 'cloudinary'
 
-// Configure Cloudinary
 cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -13,10 +12,8 @@ cloudinary.config({
 
 interface CloudinaryUploadResult {
   secure_url: string
-  // Add other properties you might need from Cloudinary response
   public_id?: string
   version?: number
-  // ... other Cloudinary properties
 }
 
 export async function POST(request: NextRequest) {
@@ -33,23 +30,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "No file provided" }, { status: 400 })
     }
 
-    // Validate file type
     if (!file.type.startsWith('image/')) {
       return NextResponse.json({ message: "Only image files are allowed" }, { status: 400 })
     }
 
-    // Validate file size (e.g., 5MB limit)
-    const maxSize = 5 * 1024 * 1024 // 5MB
+    const maxSize = 5 * 1024 * 1024
     if (file.size > maxSize) {
       return NextResponse.json({ message: "File size must be less than 5MB" }, { status: 400 })
     }
 
-    // Convert file to buffer
     const buffer = await file.arrayBuffer()
     const base64 = Buffer.from(buffer).toString('base64')
     const dataURI = `data:${file.type};base64,${base64}`
 
-    // Upload to Cloudinary
     const uploadResult = await new Promise<CloudinaryUploadResult>((resolve, reject) => {
       cloudinary.uploader.upload(
         dataURI,

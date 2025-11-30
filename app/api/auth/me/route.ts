@@ -5,6 +5,7 @@ import { ObjectId } from "mongodb"
 
 export async function GET(request: NextRequest) {
   try {
+
     const payload = await verifyAuth()
 
     if (!payload) {
@@ -12,7 +13,10 @@ export async function GET(request: NextRequest) {
     }
 
     const { db } = await connectToDatabase()
-    const user = await db.collection("users").findOne({ _id: new ObjectId(payload.userId as string) })
+
+    const user = await db
+      .collection("users")
+      .findOne({ _id: new ObjectId(payload.userId as string) })
 
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 })
