@@ -5,10 +5,9 @@
 [build.environment]
   NODE_VERSION = "20"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
 
 [build.processing]
   skip_processing = true
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
