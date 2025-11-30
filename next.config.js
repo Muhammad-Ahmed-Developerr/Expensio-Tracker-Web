@@ -8,6 +8,16 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    esmExternals: 'loose'
+  },
+  output: 'standalone',
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;

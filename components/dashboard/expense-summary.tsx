@@ -158,7 +158,7 @@ export default function ExpenseSummary({ expenses }: ExpenseSummaryProps) {
           <div className="space-y-1">
             {summaries.map((summary, index) => (
               <motion.p 
-                key={`total-${summary.currency}`}
+                key={`total-${summary.currency}-${index}`}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
@@ -206,7 +206,7 @@ export default function ExpenseSummary({ expenses }: ExpenseSummaryProps) {
           <div className="space-y-1">
             {summaries.map((summary, index) => (
               <motion.p 
-                key={`average-${summary.currency}`}
+                key={`average-${summary.currency}-${index}`}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
@@ -235,7 +235,7 @@ export default function ExpenseSummary({ expenses }: ExpenseSummaryProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {summaries.map((summary, index) => (
               <motion.div 
-                key={`breakdown-${summary.currency}`}
+                key={`breakdown-${summary.currency}-${index}`}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}

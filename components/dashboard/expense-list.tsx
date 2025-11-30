@@ -36,7 +36,7 @@ export default function ExpenseList({ expenses, isLoading, onRefresh }: ExpenseL
     <div className="space-y-3">
       {expenses.map((expense, index) => (
         <motion.div
-          key={expense._id}
+          key={expense._id || `expense-${index}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
