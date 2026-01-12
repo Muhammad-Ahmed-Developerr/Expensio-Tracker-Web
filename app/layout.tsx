@@ -11,6 +11,9 @@ const geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Expensio Tracker Web - Manage Your Finances",
   description: "A modern expense tracking application with Google OAuth and PDF export",
+  verification: {
+    google: "d882db520c726192", 
+  },
   icons: {
     icon: [
       {
