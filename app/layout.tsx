@@ -5,9 +5,8 @@ import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
 
-const geist = Geist({ subsets: ["latin"] })
-const geistMono = Geist_Mono({ subsets: ["latin"] })
-
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist" })
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" })
 
 export const metadata: Metadata = {
   title: "Expensio Tracker Web - Manage Your Finances",
@@ -19,8 +18,10 @@ export const metadata: Metadata = {
     icon: "/logo.png",
     apple: "/logo.png",
   },
+  metadataBase: new URL("https://expensio-tracker-web.netlify.app/"),
 }
 
+// Viewport settings
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -28,10 +29,13 @@ export const viewport: Viewport = {
   userScalable: false,
 }
 
+// Root Layout
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geist.className} antialiased`}>
+      <body
+        className={`${geist.className} ${geistMono.className} antialiased bg-gray-900 text-white`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -41,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <Analytics />
         </ThemeProvider>
-    </body>
+      </body>
     </html>
   )
 }
