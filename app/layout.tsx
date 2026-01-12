@@ -8,6 +8,7 @@ import "./globals.css"
 const geist = Geist({ subsets: ["latin"] })
 const geistMono = Geist_Mono({ subsets: ["latin"] })
 
+
 export const metadata: Metadata = {
   title: "Expensio Tracker Web - Manage Your Finances",
   description: "A modern expense tracking application with Google OAuth and PDF export",
@@ -15,12 +16,7 @@ export const metadata: Metadata = {
     google: "d882db520c726192", 
   },
   icons: {
-    icon: [
-      {
-        url: "/logo.png",
-        type: "image/png",
-      },
-    ],
+    icon: "/logo.png",
     apple: "/logo.png",
   },
 }
@@ -32,22 +28,20 @@ export const viewport: Viewport = {
   userScalable: false,
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script src="https://accounts.google.com/gsi/client" async defer></script>
-      </head>
       <body className={`${geist.className} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
           {children}
           <Analytics />
         </ThemeProvider>
-      </body>
+    </body>
     </html>
   )
 }
