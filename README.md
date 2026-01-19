@@ -80,6 +80,15 @@ A modern, full-stack expense tracking application built with cutting-edge web te
 - **HTTP-only Cookies** - Secure token storage
 - **NextAuth.js** - Authentication library
 
+## 👨‍💻 Author
+
+**Muhammad Ahmed**  
+Full Stack Web Developer  
+
+I build high-performance web applications with a strong focus on modern UI/UX, smooth animations, and scalable architectures.  
+Experienced in frontend-heavy products using Next.js, TypeScript, and animation-driven interfaces, while also capable of handling full-stack solutions when required.
+
+
 ## 📦 Installation
 
 ### Prerequisites
