@@ -117,7 +117,7 @@ export default function ExpenseCard({ expense, onRefresh }: ExpenseCardProps) {
                   <div className="flex flex-wrap items-center gap-2 mt-2">
                     <span className="flex items-center gap-1 px-2 py-1 bg-cyan-500/20 text-cyan-700 dark:text-cyan-400 rounded-full text-xs font-medium">
                       <Hash className="w-3 h-3" />
-                      #{expense.expenseNumber}
+                      {expense.expenseNumber}
                     </span>
                     {expense.userSequentialId && (
                       <span className="flex items-center gap-1 px-2 py-1 bg-blue-500/20 text-blue-700 dark:text-blue-400 rounded-full text-xs">
