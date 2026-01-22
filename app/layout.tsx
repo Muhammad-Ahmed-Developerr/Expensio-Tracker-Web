@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
    SEO + META CONFIG
 ================================ */
 export const metadata: Metadata = {
-  metadataBase: new URL("https://expensio-tracker-web.netlify.app"),
+  metadataBase: new URL("https://expensio-tracker-web.vercel.app"),
 
   title: {
     default: "Expensio – Expense Tracker Web App",
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://expensio-tracker-web.netlify.app",
+    url: "https://expensio-tracker-web.vercel.app",
     siteName: "Expensio",
     title: "Expensio – Expense Tracker Web App",
     description:

@@ -7,7 +7,7 @@ A modern, full-stack expense tracking application built with cutting-edge web te
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![MongoDB](https://img.shields.io/badge/MongoDB-7-green)
 
-🌐 **Website:** [https://expensio-tracker-web.netlify.app](https://expensio-tracker-web.netlify.app)
+🌐 **Website:** [https://expensio-tracker-web.netlify.app](https://expensio-tracker-web.vercel.app)
 
 ## 📸 Project Screenshots
 
